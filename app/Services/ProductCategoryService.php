@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Repositories\ProductCategoryRepository;
+use App\Repositories\ProductRepository;
 use App\Traits\ApiResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
 class ProductCategoryService
@@ -21,11 +23,11 @@ class ProductCategoryService
 
     public function getAll(int $page)
     {
-        $limit = 2;
+        $limit = 10;
         $skip = ($page - 1) * $limit;
 
         return $this->jsonResponse(200, 'Success', [
-            'product_categories' => $this->repository->getAll($skip, $limit),
+            'items' => $this->repository->getAll($skip, $limit),
             'total_records' => $this->repository->totalRecords()
         ]);
     }
@@ -39,7 +41,7 @@ class ProductCategoryService
             ];
 
             return $this->jsonResponse(200, 'Success', [
-                'product_category' => $this->repository->storeData($data)
+                'item' => $this->repository->storeData($data)
             ]);
 
         } catch (\Throwable $th) {
@@ -57,7 +59,7 @@ class ProductCategoryService
 
         if (!empty($product_category)) {
             return $this->jsonResponse(200, 'Success', [
-                'product_category' => $product_category
+                'item' => $product_category
             ]);
         }
 
@@ -100,5 +102,28 @@ class ProductCategoryService
             return $this->jsonResponse(500, 'Something went wrong');
 
         }
+    }
+
+
+    public function findWithProduct(int $id, int $page)
+    {
+        $product_category = $this->repository->findById($id);
+
+        if (!empty($product_category)) {
+            $limit = 10;
+            $skip = ($page - 1) * $limit;
+
+            $product_repo = new ProductRepository;
+
+            return $this->jsonResponse(200, 'Success', [
+                'item' => $product_category,
+                'products' => [
+                    'items' => $product_repo->getByCategory($id, $skip, $limit),
+                    'total_records' => $product_repo->totalRecords()
+                ]
+            ]);
+        }
+
+        return $this->jsonResponse(404, 'Not found', null);
     }
 }

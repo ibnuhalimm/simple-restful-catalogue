@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ProductCategoryController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('api')
     ->group(function() {
         Route::resource('product-categories', ProductCategoryController::class)->except(['create', 'edit']);
+        Route::get('product-categories/{id}/products', [ProductController::class, 'index']);
     });
