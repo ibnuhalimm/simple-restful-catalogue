@@ -2,80 +2,59 @@
 
 namespace App\Repositories;
 
-use App\Contracts\BasicApiOperations;
 use App\Models\ProductCategory;
+use Illuminate\Database\Eloquent\Collection;
 
-class ProductCategoryRepository implements BasicApiOperations
+class ProductCategoryRepository extends BaseRepository
 {
     /**
-     * Get all `product_categories` data
+     * Inject ProductCategory Model
+     *
+     * @param ProductCategory $product_category
+     * @return void
+     */
+    public function __construct(ProductCategory $product_category)
+    {
+        parent::__construct($product_category);
+    }
+
+
+    /**
+     * Get all
+     *
+     * @return Collection
+     */
+    public function getAll()
+    {
+        return $this->newQuery()->get();
+    }
+
+
+    /**
+     * Get all by limit offset for pagination or load more
      *
      * @param int $skip
-     * @param int $limit
-     * @return Illuminate\Support\Collection
+     * @param int $take
+     * @param array $criteria
+     * @param array $columns
+     * @return Collection
      */
-    public function getAll(int $skip, int $limit)
+    public function getForPagination(int $skip, int $limit, array $criteria = [], array $columns = ['*']): Collection
     {
-        return ProductCategory::take($limit)->skip($skip)->get();
+        return $this->newQuery()->where($criteria)->select($columns)->skip($skip)->take($limit)->get();
     }
 
     /**
-     * Store data into `product_categories` table
+     * Find product by id with products
+     * - support pagination for products
      *
-     * @param array $data
-     * @return \App\Models\ProductCategory
+     * @param int $category_id
+     * @return Collection
      */
-    public function storeData(array $data)
+    public function findByIdWithProducts(int $category_id)
     {
-        return ProductCategory::create($data);
-    }
-
-    /**
-     * Get single `product_categories` data by id
-     *
-     * @param int $id
-     * @return \App\Models\ProductCategory|null
-     */
-    public function findById($id)
-    {
-        return ProductCategory::where('id', $id)->first();
-    }
-
-    /**
-     * Update data in `product_categories` table
-     *
-     * @param array $data
-     * @param int $id
-     * @return array
-     */
-    public function updateById(array $data, $id)
-    {
-        ProductCategory::where('id', $id)->update($data);
-
-        return $data;
-    }
-
-    /**
-     * Delete data from `product_categories` table
-     *
-     * @param int $product_category_id
-     * @param App\Models\ProductCategory $model
-     * @return int
-     */
-    public function deleteById($id)
-    {
-        ProductCategory::destroy($id);
-
-        return $id;
-    }
-
-    /**
-     * Count the records of the `product_categories` table
-     *
-     * @return int
-     */
-    public function totalRecords()
-    {
-        return ProductCategory::count();
+        return $this->newQuery()->where('id', $category_id)->with(['products' => function($product) {
+            $product->with('price_stock');
+        }])->firstOrFail();
     }
 }

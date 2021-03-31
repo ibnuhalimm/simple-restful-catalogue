@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\ProductCategory;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetAllRequest extends FormRequest
+class GetByCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

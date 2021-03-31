@@ -37,8 +37,18 @@ class Product extends Model
      * @var hidden
      */
     protected $hidden = [
-        'product_variant_id',
         'created_at',
         'updated_at'
     ];
+
+
+    /**
+     * Relationship to get price and stock
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function price_stock()
+    {
+        return $this->hasOne(ProductVariant::class, 'product_id', 'id');
+    }
 }

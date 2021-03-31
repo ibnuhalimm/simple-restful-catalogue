@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Product;
 use App\Repositories\ProductCategoryRepository;
 use App\Repositories\ProductRepository;
+use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,6 +14,13 @@ class ProductApiTest extends TestCase
 {
     use WithFaker;
 
+    private $product_service;
+
+    public function __construct(ProductService $product_service)
+    {
+        $this->product_service = $product_service;
+    }
+
     /**
      * A basic feature test example.
      *
@@ -20,9 +28,7 @@ class ProductApiTest extends TestCase
      */
     public function test_can_view_product_detail()
     {
-        $product_repo = new ProductRepository;
-
-        $product = $product_repo->storeData([
+        $product = $this->product_service->storeData([
             'product_category_id' => $this->faker->randomDigitNotZero(),
             'name' => $this->faker->text(5),
             'description' => $this->faker->text(),

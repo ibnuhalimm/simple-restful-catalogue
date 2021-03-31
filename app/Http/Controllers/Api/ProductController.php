@@ -3,20 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Product\GetByCategoryRequest;
+use App\Http\Requests\Product\GetByCategoryRequest;
 use App\Services\ProductCategoryService;
 use App\Services\ProductService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use ApiResponse;
+
     protected $product_category_service;
     protected $product_service;
 
     /**
      * Construct
      *
-     * @param \App\Services\ProductCategoryService $product_category_service
+     * @param ProductCategoryService $product_category_service
      */
     public function __construct(
         ProductCategoryService $product_category_service,
@@ -31,12 +34,12 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @param int $category_id
-     * @param \App\Http\Requests\Api\Product\GetByCategoryRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index($category_id, GetByCategoryRequest $request)
+    public function index($category_id, Request $request)
     {
-        return $this->product_category_service->findWithProduct($category_id, $request->page);
+        return $this->apiResponse(200, 'Success', $this->product_category_service->findWithProduct($category_id, $request->page));
     }
 
     /**
@@ -68,7 +71,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return $this->product_service->findById($id);
+        return $this->apiResponse(200, 'Success', $this->product_service->findByIdWithPriceStock($id));
     }
 
     /**

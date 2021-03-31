@@ -2,38 +2,49 @@
 
 namespace App\Services;
 
+use App\Models\Product;
 use App\Repositories\ProductCategoryRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProductVariantRepository;
 use App\Traits\ApiResponse;
 
 class ProductService
 {
-    use ApiResponse;
-
+    /**
+     * @var mixed
+     */
     protected $repo;
 
-
+    /**
+     * Inject ProductRepository
+     *
+     * @param ProductRepository $repo
+     * @return void
+     */
     public function __construct(ProductRepository $repo)
     {
         $this->repo = $repo;
     }
 
-
-    public function findById($id)
+    /**
+     * Find by id
+     *
+     * @param int $id
+     * @return Collection
+     */
+    public function findByIdWithPriceStock(int $id)
     {
-        $product = $this->repo->findById($id);
+        return $this->repo->findByIdWithPriceStock($id);
+    }
 
-        if (!empty($product)) {
-            $category_repo = new ProductCategoryRepository;
 
-            return $this->jsonResponse(200, 'Success', [
-                'item' => $product,
-                'product_category' => [
-                    'item' => $category_repo->findById($product->product_category_id)
-                ]
-            ]);
-        }
-
-        return $this->jsonResponse(404, 'Not found');
+    /**
+     * Store new data
+     *
+     * @param array $attributes
+     */
+    public function storeData(array $attributes)
+    {
+        return $this->repo->create($attributes);
     }
 }
