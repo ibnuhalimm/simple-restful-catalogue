@@ -5,20 +5,26 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Product\GetByCategoryRequest;
 use App\Services\ProductCategoryService;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     protected $product_category_service;
+    protected $product_service;
 
     /**
      * Construct
      *
      * @param \App\Services\ProductCategoryService $product_category_service
      */
-    public function __construct(ProductCategoryService $product_category_service)
+    public function __construct(
+        ProductCategoryService $product_category_service,
+        ProductService $product_service
+        )
     {
         $this->product_category_service = $product_category_service;
+        $this->product_service = $product_service;
     }
 
     /**
@@ -62,7 +68,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->product_service->findById($id);
     }
 
     /**

@@ -24,4 +24,6 @@ Route::middleware('api')
     ->group(function() {
         Route::resource('product-categories', ProductCategoryController::class)->except(['create', 'edit']);
         Route::get('product-categories/{id}/products', [ProductController::class, 'index']);
+
+        Route::resource('products', ProductController::class)->except(['index', 'create', 'edit']);
     });
