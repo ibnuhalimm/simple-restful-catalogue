@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\ProductCategory;
-use App\Repositories\ProductCategoryRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -18,18 +17,10 @@ class ProductCategoryApiTest extends TestCase
      */
     public function test_can_retrieve_product_categories()
     {
-        $response = $this->get('api/product-categories?page=1', $this->api_headers);
+        $response = $this->get(route('api.product-categories.index'), $this->api_headers);
 
         $response->assertStatus(200)
             ->assertJsonStructure();
-    }
-
-
-    public function test_can_not_retrieve_product_categories_without_page_params()
-    {
-        $response = $this->get('api/product-categories', $this->api_headers);
-
-        $response->assertStatus(422);
     }
 
 
@@ -39,9 +30,8 @@ class ProductCategoryApiTest extends TestCase
             'name' => Str::random(10)
         ];
 
-        $response = $this->post('api/product-categories', $body, $this->api_headers);
-
-        $response->assertStatus(200);
+        $response = $this->post(route('api.product-categories.store'), $body, $this->api_headers);
+        $response->assertStatus(201);
     }
 
 
@@ -51,8 +41,7 @@ class ProductCategoryApiTest extends TestCase
             'name' => Str::random(2)
         ];
 
-        $response = $this->post('api/product-categories', $body, $this->api_headers);
-
+        $response = $this->post(route('api.product-categories.store'), $body, $this->api_headers);
         $response->assertStatus(422);
     }
 
@@ -63,27 +52,23 @@ class ProductCategoryApiTest extends TestCase
             'name' => Str::random(51)
         ];
 
-        $response = $this->post('api/product-categories', $body, $this->api_headers);
-
+        $response = $this->post(route('api.product-categories.store'), $body, $this->api_headers);
         $response->assertStatus(422);
     }
 
 
     public function test_can_get_single_product_category()
     {
-        $repo = new ProductCategoryRepository();
-        $product_factory = $repo->storeData(['name' => Str::random(10)]);
+        $product_category = ProductCategory::factory()->create();
 
-        $response = $this->get('api/product-categories/' . $product_factory->id, $this->api_headers);
-
+        $response = $this->get(route('api.product-categories.show', [ 'product_category' => $product_category->id ]), $this->api_headers);
         $response->assertStatus(200);
     }
 
 
     public function test_return_not_found_if_product_category_does_not_exists()
     {
-        $response = $this->get('api/product-categories/100', $this->api_headers);
-
+        $response = $this->get(route('api.product-categories.show', [ 'product_category' => 999 ]), $this->api_headers);
         $response->assertStatus(404);
     }
 }

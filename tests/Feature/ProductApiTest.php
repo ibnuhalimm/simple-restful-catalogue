@@ -3,23 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
-use App\Repositories\ProductCategoryRepository;
-use App\Repositories\ProductRepository;
-use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ProductApiTest extends TestCase
+class ProductApi extends TestCase
 {
     use WithFaker;
-
-    private $product_service;
-
-    public function __construct(ProductService $product_service)
-    {
-        $this->product_service = $product_service;
-    }
 
     /**
      * A basic feature test example.
@@ -50,8 +40,7 @@ class ProductApiTest extends TestCase
      */
     public function test_can_not_view_product_detail_if_not_exists()
     {
-        $response = $this->get('/api/products/100', $this->api_headers);
-
+        $response = $this->get(route('api.products.show', [ 'products' => 999 ]), $this->api_headers);
         $response->assertStatus(404);
     }
 }
