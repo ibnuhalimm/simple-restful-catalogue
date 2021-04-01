@@ -40,7 +40,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
      */
     public function findByIdWithPriceStock(int $id)
     {
-        return $this->findById($id, ['*'], ['price_stock']);
+        return $this->findById($id, ['*'], ['price_stock', 'product_variants']);
     }
 
 }
