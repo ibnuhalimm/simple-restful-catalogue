@@ -8,10 +8,9 @@ use App\Repositories\Product\ProductInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\ProductCategory\ProductCategoryInterface;
 use App\Repositories\ProductCategory\ProductCategoryRepository;
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class RepositoryServiceProvider extends ServiceProvider implements DeferrableProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -26,17 +25,18 @@ class RepositoryServiceProvider extends ServiceProvider implements DeferrablePro
             );
         });
 
+        // $this->app->bind(ProductCategoryService::class, function($app) {
+        //     return new ProductCategoryService(
+        //         $app->make(ProductCategoryInterface::class)
+        //     );
+        // });
+
         $this->app->bind(ProductInterface::class, function($app) {
             return new ProductRepository(
                 $app->make(Product::class)
             );
         });
 
-        // $this->app->bind(ProductCategoryService::class, function($app) {
-        //     return new ProductCategoryService(
-        //         $app->make(ProductCategoryInterface::class)
-        //     );
-        // });
     }
 
     /**
