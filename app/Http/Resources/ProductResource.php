@@ -9,7 +9,7 @@ class ProductResource extends JsonResource
 {
     private function hasVariant()
     {
-        return $this->flag_variant === Product::FLAG_VARIANT_AS_PRODUCT;
+        return $this->flag_variant === Product::FLAG_VARIANT_AS_VARIANT;
     }
 
     /**
