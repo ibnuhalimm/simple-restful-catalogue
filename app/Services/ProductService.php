@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ProductResource;
 use App\Repositories\Product\ProductInterface;
 
 class ProductService
@@ -21,7 +22,7 @@ class ProductService
      */
     public function findByIdWithPriceStock(int $id)
     {
-        return $this->repo->findByIdWithPriceStock($id);
+        return ProductResource::make($this->repo->findByIdWithPriceStock($id));
     }
 
 

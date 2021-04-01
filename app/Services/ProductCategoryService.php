@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ProductCategoryResource;
 use App\Repositories\ProductCategory\ProductCategoryInterface;
 use Illuminate\Support\Str;
 
@@ -98,6 +99,6 @@ class ProductCategoryService
 
     public function findWithProduct(int $id)
     {
-        return $this->repo->findByIdWithProducts($id);
+        return ProductCategoryResource::make($this->repo->findByIdWithProducts($id));
     }
 }
