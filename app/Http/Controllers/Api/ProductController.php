@@ -33,12 +33,11 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @param int $category_id
-     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index($category_id, Request $request)
+    public function index($category_id)
     {
-        return $this->apiResponse(200, 'Success', $this->product_category_service->findWithProduct($category_id, $request->page));
+        return $this->apiResponse(200, 'Success', $this->product_category_service->findWithProduct($category_id));
     }
 
     /**
