@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Product;
 
-use App\Contracts\BasicApiOperations;
 use App\Models\Product;
+use App\Repositories\BaseRepository;
 
-class ProductRepository extends BaseRepository
+class ProductRepository extends BaseRepository implements ProductInterface
 {
     /**
      * Inject Product Model

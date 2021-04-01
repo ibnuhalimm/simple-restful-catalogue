@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -50,5 +51,15 @@ class Product extends Model
     public function price_stock()
     {
         return $this->hasOne(ProductVariant::class, 'product_id', 'id');
+    }
+
+    /**
+     * Inverse relationship to 'product_category'
+     *
+     * @return BelongsTo
+     */
+    public function product_category()
+    {
+        return $this->belongsTo(ProductCategory::class);
     }
 }

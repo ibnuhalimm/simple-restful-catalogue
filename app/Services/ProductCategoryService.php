@@ -2,19 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\ProductCategoryRepository;
-use App\Traits\ApiResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Repositories\ProductCategory\ProductCategoryInterface;
 use Illuminate\Support\Str;
 
 class ProductCategoryService
 {
-    use ApiResponse;
+    private $repo;
 
-    protected $repo;
-
-
-    public function __construct(ProductCategoryRepository $repository)
+    public function __construct(ProductCategoryInterface $repository)
     {
         $this->repo = $repository;
     }

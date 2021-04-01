@@ -2,28 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Product;
-use App\Repositories\ProductCategoryRepository;
-use App\Repositories\ProductRepository;
-use App\Repositories\ProductVariantRepository;
-use App\Traits\ApiResponse;
+use App\Repositories\Product\ProductInterface;
 
 class ProductService
 {
-    /**
-     * @var mixed
-     */
-    protected $repo;
+    private $repo;
 
-    /**
-     * Inject ProductRepository
-     *
-     * @param ProductRepository $repo
-     * @return void
-     */
-    public function __construct(ProductRepository $repo)
+    public function __construct(ProductInterface $repository)
     {
-        $this->repo = $repo;
+        $this->repo = $repository;
     }
 
     /**

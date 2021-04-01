@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('api')
+    ->name('api.')
     ->group(function() {
         Route::resource('product-categories', ProductCategoryController::class)->except(['create', 'edit']);
         Route::get('product-categories/{id}/products', [ProductController::class, 'index']);

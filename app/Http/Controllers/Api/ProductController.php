@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\GetByCategoryRequest;
 use App\Services\ProductCategoryService;
 use App\Services\ProductService;
 use App\Traits\ApiResponse;
