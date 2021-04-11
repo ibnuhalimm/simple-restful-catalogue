@@ -97,8 +97,15 @@ class ProductCategoryService
     }
 
 
-    public function findWithProduct(int $id)
+    public function findWithProduct(int $id, $params = [])
     {
-        return ProductCategoryResource::make($this->repo->findByIdWithProducts($id));
+        if (empty($params)) {
+            return ProductCategoryResource::make($this->repo->findByIdWithProducts($id));
+        }
+
+        $min_price = isset($params['min_price']) ? $params['min_price'] : 0;
+        $max_price = isset($params['max_price']) ? $params['max_price'] : 10000;
+
+        return ProductCategoryResource::make($this->repo->findByIdWithProductsPrice($id, $min_price, $max_price));
     }
 }

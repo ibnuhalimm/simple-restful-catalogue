@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductCategory\findWithProductRequest;
 use App\Services\ProductCategoryService;
 use App\Services\ProductService;
 use App\Traits\ApiResponse;
@@ -32,12 +33,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param findWithProductRequest $request
      * @param int $category_id
      * @return \Illuminate\Http\Response
      */
-    public function index($category_id)
+    public function index(findWithProductRequest $request, $category_id)
     {
-        return $this->apiResponse(200, 'Success', $this->product_category_service->findWithProduct($category_id));
+        return $this->apiResponse(200, 'Success', $this->product_category_service->findWithProduct($category_id, $request->all()));
     }
 
     /**
