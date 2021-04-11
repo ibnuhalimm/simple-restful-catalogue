@@ -1,0 +1,49 @@
+# Simple Restful Product Catalogue (SRPC)
+
+version: '3'
+services:
+  webserver:
+    image: nginx:alpine
+    container_name: srpc_webserver
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d/
+    ports:
+      - '8082:80'
+
+  app:
+    container_name: srpc_app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+
+  db:
+    image: mariadb:10.3
+    container_name: srpc_db
+    ports:
+      - '33063:3306'
+    volumes:
+      - ./docker/dbdata/mysql:/var/lib/database
+    environment:
+      MYSQL_DATABASE: srpc
+      MYSQL_ROOT_PASSWORD: toor
+
+  dbtest:
+    image: mariadb:10.3
+    container_name: srpc_db_test
+    ports:
+      - '33064:3306'
+    tmpfs:
+      - /var/lib/mysql
+    environment:
+      MYSQL_DATABASE: srpc_test
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+
+  redis:
+    image: redis
+    container_name: srpc_redis
+    volumes:
+      - ./docker/dbdata/redis:/data
