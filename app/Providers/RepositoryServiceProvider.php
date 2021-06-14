@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Product;
-use App\Models\ProductCategory;
-use App\Repositories\Product\ProductInterface;
-use App\Repositories\Product\ProductRepository;
-use App\Repositories\ProductCategory\ProductCategoryInterface;
-use App\Repositories\ProductCategory\ProductCategoryRepository;
+use App\Models\{Product, ProductCategory, User};
+use App\Repositories\Product\{ProductInterface, ProductRepository};
+use App\Repositories\ProductCategory\{ProductCategoryInterface, ProductCategoryRepository};
+use App\Repositories\User\{AuthInterface, AuthRepository};
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -34,6 +32,13 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductInterface::class, function($app) {
             return new ProductRepository(
                 $app->make(Product::class)
+            );
+        });
+
+        // Auth
+        $this->app->bind(AuthInterface::class, function($app) {
+            return new AuthRepository(
+                $app->make(User::class)
             );
         });
 
