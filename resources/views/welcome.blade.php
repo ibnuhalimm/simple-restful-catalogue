@@ -33,7 +33,7 @@
                     </svg>
                 </div> --}}
 
-                <h1 class="text-center">
+                <h1 class="text-center dark:text-gray-400">
                     Simple Restful Product Catalogue
                 </h1>
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
@@ -44,7 +44,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                   </svg>
                                 <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <a href="{{ config('app.url') }}" class="underline text-gray-900 dark:text-white">
+                                    <a href="{{ config('app.url') }}" class="underline text-gray-900 dark:text-gray-400">
                                         About
                                     </a>
                                 </div>
@@ -61,7 +61,7 @@
                             <div class="flex items-center">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                                 <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <a href="https://documenter.getpostman.com/view/480038/TzCLAp4p" target="_blank" class="underline text-gray-900 dark:text-white">
+                                    <a href="https://documenter.getpostman.com/view/480038/TzCLAp4p" target="_blank" class="underline text-gray-900 dark:text-gray-400">
                                         Documentation
                                     </a>
                                 </div>
@@ -80,7 +80,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                                 <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <a href="https://github.com/ibnuhalimm" target="_blank" class="underline text-gray-900 dark:text-white">
+                                    <a href="https://github.com/ibnuhalimm" target="_blank" class="underline text-gray-900 dark:text-gray-400">
                                         Author
                                     </a>
                                 </div>
@@ -99,7 +99,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                 </svg>
                                 <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <a href="https://github.com/ibnuhalimm/simple-restful-catalogue" class="underline text-gray-900 dark:text-white">
+                                    <a href="https://github.com/ibnuhalimm/simple-restful-catalogue" class="underline text-gray-900 dark:text-gray-400">
                                         Source Code
                                     </a>
                                 </div>
