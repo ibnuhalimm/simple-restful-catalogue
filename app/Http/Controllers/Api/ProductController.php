@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\StoreRequest;
+use App\Http\Requests\Product\{StoreRequest, UpdateRequest};
 use App\Http\Requests\ProductCategory\findWithProductRequest;
 use App\Services\ProductCategoryService;
 use App\Services\ProductService;
@@ -74,13 +74,19 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Product\UpdateRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $product = $this->product_service->updateById($id, $request->all());
+
+        if ($product) {
+            return $this->apiResponse(200, 'Data updated.', $product);
+        }
+
+        return $this->apiResponse(500, 'Something went wrong.');
     }
 
     /**
