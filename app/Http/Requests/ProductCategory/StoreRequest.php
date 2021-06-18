@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [ 'required', 'string', 'min:3', 'max:50', 'unique:' . (new ProductCategory())->getTable() .',name' ]
+            'name' => [ 'required', 'string', 'min:3', 'max:50' ]
         ];
     }
 
