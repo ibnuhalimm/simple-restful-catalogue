@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\ProductCategoryResource;
 use App\Repositories\ProductCategory\ProductCategoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
 class ProductCategoryService
@@ -54,7 +55,14 @@ class ProductCategoryService
 
     public function findById(int $id)
     {
-        return $this->repo->findById($id);
+        try {
+            return $this->repo->findById($id);
+
+        } catch (ModelNotFoundException $th) {
+            report($th);
+
+            return;
+        }
     }
 
 

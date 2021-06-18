@@ -47,7 +47,13 @@ class ProductCategoryController extends Controller
 
     public function show($product_category_id)
     {
-        return $this->apiResponse(200, 'Success', $this->product_category_service->findById($product_category_id));
+        $category = $this->product_category_service->findById($product_category_id);
+
+        if ($category) {
+            return $this->apiResponse(200, 'Success', $category);
+        }
+
+        return $this->apiResponse(404, 'Data not found');
     }
 
 
