@@ -37,9 +37,11 @@ class LoginController extends Controller
         $authResult = $this->authService->authenticate($loginInfo);
 
         if ($authResult) {
-            return $this->apiResponse(200, 'Success', $authResult);
+            $userData = $authResult['user'];
+
+            return $this->apiResponse(200, 'Hi, ' . $userData->name, $authResult);
         }
 
-        return $this->apiResponse(401, 'Unauthorized.');
+        return $this->apiResponse(401, 'Sorry, wrong email or password.');
     }
 }
