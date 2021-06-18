@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\ProductCategory\findWithProductRequest;
 use App\Services\ProductCategoryService;
 use App\Services\ProductService;
@@ -43,24 +44,20 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Product\StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $product = $this->product_service->storeProduct($request->all());
+
+        if ($product) {
+            return $this->apiResponse(200, 'Data created.', $product);
+        }
+
+        return $this->apiResponse(500, 'Something went wrong.');
     }
 
     /**
@@ -72,17 +69,6 @@ class ProductController extends Controller
     public function show($id)
     {
         return $this->apiResponse(200, 'Success', $this->product_service->findByIdWithPriceStock($id));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
