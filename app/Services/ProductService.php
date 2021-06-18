@@ -105,4 +105,25 @@ class ProductService
             return false;
         }
     }
+
+    /**
+     * Delete the product
+     *
+     * @param  int  $productId
+     * @return bool
+     */
+    public function deleteById(int $productId)
+    {
+        try {
+            $this->productRepo->findById($productId)->delete();
+            $this->variantRepo->findByCriteria([ 'product_id' => $productId ])->delete();
+
+            return true;
+
+        } catch (\Throwable $th) {
+            report($th);
+
+            return false;
+        }
+    }
 }

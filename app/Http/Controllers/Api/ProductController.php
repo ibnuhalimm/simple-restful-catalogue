@@ -92,11 +92,17 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $productId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($productId)
     {
-        //
+        $deleted = $this->product_service->deleteById($productId);
+
+        if ($deleted) {
+            return $this->apiResponse(200, 'Data deleted.');
+        }
+
+        return $this->apiResponse(500, 'Something went wrong.');
     }
 }
