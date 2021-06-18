@@ -31,7 +31,11 @@ class AuthService
     public function register(array $user)
     {
         try {
-            $userData = $this->repo->create($user);
+            $userData['name'] = $user['name'];
+            $userData['email'] = $user['email'];
+            $userData['password'] = Hash::make($user['password']);
+
+            $userData = $this->repo->create($userData);
 
             return [
                 'user' => UserResource::make($userData),
@@ -58,7 +62,7 @@ class AuthService
 
         $user = User::where('email', $email)->first();
 
-        if ($user && $password == $user->password) {
+        if ($user && Hash::check($password, $user->password)) {
             return [
                 'user' => UserResource::make($user),
                 'token' => $user->createToken($user->email)->plainTextToken
